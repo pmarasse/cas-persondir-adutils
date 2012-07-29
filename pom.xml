@@ -33,13 +33,11 @@
             <groupId>org.springframework.ldap</groupId>
             <artifactId>spring-ldap-core</artifactId>
             <version>${springldap.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.ldap</groupId>
             <artifactId>spring-ldap-core-tiger</artifactId>
             <version>${springldap.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
