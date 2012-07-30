@@ -81,7 +81,7 @@ public class TokenGroupsToAttributeProcessorTest {
         CachingADTokenGroupsRegistry tokenRegistry = new CachingADTokenGroupsRegistry();
         tokenRegistry.setContextSource(ldapCS);
         tokenRegistry.setMaxElements(20);
-        tokenRegistry.setGroupBaseDN("");
+        tokenRegistry.setContextSourceBaseDN(BASE_DN);
         tokenRegistry.afterPropertiesSet();
         log.debug("CachingADTokenGroupsRegistry created");
 
