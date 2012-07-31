@@ -18,9 +18,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.DirContextAdapter;
-import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
-import org.springframework.ldap.core.support.LdapContextSource;
 
 import net.archigny.cas.persondir.processors.IAttributesProcessor;
 import net.archigny.utils.ad.api.IActiveDirectoryTokenGroupsRegistry;
@@ -91,7 +89,12 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
     /**
      * LDAP Context Source
      */
-    private LdapContextSource           contextSource;
+    private ContextSource               contextSource;
+
+    /**
+     * Base DN used by Ldap Context Source (cannot fetch it from "ContextSource"...)
+     */
+    private LdapName                    contextSourceBaseDN;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -132,12 +135,11 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
         try {
             Name userDN = new LdapName((String) dnValues.get(0));
 
-            DistinguishedName baseDN = contextSource.getBaseLdapPath();
-            if (baseDN != null) {
-                if (userDN.startsWith(baseDN)) {
+            if (contextSourceBaseDN != null) {
+                if (userDN.startsWith(contextSourceBaseDN)) {
 
                     // Get rid of base DN before querying the directory
-                    userDN = userDN.getSuffix(baseDN.size());
+                    userDN = userDN.getSuffix(contextSourceBaseDN.size());
                     if (log.isDebugEnabled()) {
                         log.debug("base DN of contextSource found as suffix of userDN. deleting, new userDN : " + userDN.toString());
                     }
@@ -216,7 +218,7 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
         return contextSource;
     }
 
-    public void setContextSource(LdapContextSource contextSource) {
+    public void setContextSource(ContextSource contextSource) {
 
         this.contextSource = contextSource;
     }
@@ -231,6 +233,25 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
     public void setUseTokenGroupsAttribute(boolean useTokenGroupsAttribute) {
     
         this.useTokenGroupsAttribute = useTokenGroupsAttribute;
+    }
+
+    // Wrapper getter around LdapName
+    public String getBaseDN() {
+
+        return (contextSourceBaseDN == null ? "" : contextSourceBaseDN.toString());
+    }
+
+    public void setBaseDN(String baseDN) {
+
+        if (baseDN == null) {
+            throw new IllegalArgumentException("baseDN cannot be null");
+        }
+        try {
+            this.contextSourceBaseDN = new LdapName(baseDN);
+        } catch (InvalidNameException e) {
+            throw new IllegalArgumentException(e);
+        }
+
     }
 
     /**
