@@ -4,7 +4,7 @@
 
     <groupId>net.archigny</groupId>
     <artifactId>cas.persondir.adutils</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <packaging>jar</packaging>
 
     <name>cas.persondir.adutils</name>
@@ -16,7 +16,7 @@
         <springframework.version>3.1.1.RELEASE</springframework.version>
         <slf4j.log4j12.version>1.6.4</slf4j.log4j12.version>
         <adtokengorups.version>0.1.2</adtokengorups.version>
-        <persondir.version>0.1.6</persondir.version>
+        <persondir.version>0.1.7</persondir.version>
 
         <junit.version>4.10</junit.version>
         <commons.codec.version>1.6</commons.codec.version>
@@ -33,11 +33,13 @@
             <groupId>org.springframework.ldap</groupId>
             <artifactId>spring-ldap-core</artifactId>
             <version>${springldap.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.ldap</groupId>
             <artifactId>spring-ldap-core-tiger</artifactId>
             <version>${springldap.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
