@@ -15,8 +15,7 @@ import net.archigny.utils.ad.api.IActiveDirectoryTokenGroupsRegistry;
 
 public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, InitializingBean {
 
-    private final Logger                log                         = LoggerFactory
-                                                                            .getLogger(TokenGroupsToAttributeProcessor.class);
+    private final Logger                log = LoggerFactory.getLogger(TokenGroupsToAttributeProcessor.class);
 
     /**
      * tokenGroups registry used to translate SID to ldap groups
