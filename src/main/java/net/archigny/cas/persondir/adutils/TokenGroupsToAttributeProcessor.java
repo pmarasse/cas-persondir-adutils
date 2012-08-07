@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.ldap.support.LdapUtils;
+
 import net.archigny.cas.persondir.processors.IAttributesProcessor;
 import net.archigny.utils.ad.api.IActiveDirectoryTokenGroupsRegistry;
 
@@ -66,8 +68,9 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
 
             for (Object rawValue : sourceValues) {
                 String groupName = tokenRegistry.getDnFromToken((byte[]) rawValue);
-                if (groupName == null) {
-                    log.info("unable to decode raw tokebGroup class : " + rawValue.getClass().getCanonicalName());
+                if ((groupName == null) && log.isDebugEnabled()) {
+                    log.debug("unable to decode raw tokenGroup class : " + 
+                    		LdapUtils.convertBinarySidToString((byte[]) rawValue) );
                 } else {
                     targetValues.add(groupName);
                 }
@@ -75,8 +78,8 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
 
             if ((targetValues != null) && (!targetValues.isEmpty())) {
                 attributes.put(targetAtribute, targetValues);
-            } else {
-                log.info("This DN seems to have no tokenGroups");
+            } else if (log.isDebugEnabled()) {
+                log.debug("This DN seems to have no tokenGroups");
             }
 
         } catch (ClassCastException e1) {
