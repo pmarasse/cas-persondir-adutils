@@ -3,7 +3,6 @@ package net.archigny.cas.persondir.adutils;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
