@@ -50,27 +50,24 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
     }
 
     @Override
-    public void processAttributes(Map<String, List<Object>> attributes) {
+    public void processAttributes(final Map<String, List<Object>> attributes) {
 
-        List<Object> sourceValues = attributes.get(sourceAttribute);
+        final List<Object> sourceValues = attributes.get(sourceAttribute);
 
         // Source attribute found ?
         if ((sourceValues == null) || (sourceValues.isEmpty())) {
             return;
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug(sourceValues.size() + " token values found, processing...");
-        }
+        log.debug("{} token values found, processing...", sourceValues.size());
 
         try {
-            List<Object> targetValues = new ArrayList<Object>(sourceValues.size());
+            final List<Object> targetValues = new ArrayList<Object>(sourceValues.size());
 
             for (Object rawValue : sourceValues) {
                 String groupName = tokenRegistry.getDnFromToken((byte[]) rawValue);
                 if ((groupName == null) && log.isDebugEnabled()) {
-                    log.debug("unable to decode raw tokenGroup class : " + 
-                    		LdapUtils.convertBinarySidToString((byte[]) rawValue) );
+                    log.debug("unable to decode raw tokenGroup class : " + LdapUtils.convertBinarySidToString((byte[]) rawValue));
                 } else {
                     targetValues.add(groupName);
                 }
@@ -78,7 +75,7 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
 
             if ((targetValues != null) && (!targetValues.isEmpty())) {
                 attributes.put(targetAtribute, targetValues);
-            } else if (log.isDebugEnabled()) {
+            } else {
                 log.debug("This DN seems to have no tokenGroups");
             }
 
@@ -91,7 +88,7 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
     @Override
     public Set<String> getPossibleUserAttributeNames() {
 
-        Set<String> attributeNames = new HashSet<String>();
+        final Set<String> attributeNames = new HashSet<String>();
         attributeNames.add(targetAtribute);
 
         return attributeNames;
@@ -104,7 +101,7 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
         return tokenRegistry;
     }
 
-    public void setTokenRegistry(IActiveDirectoryTokenGroupsRegistry tokenRegistry) {
+    public void setTokenRegistry(final IActiveDirectoryTokenGroupsRegistry tokenRegistry) {
 
         this.tokenRegistry = tokenRegistry;
     }
@@ -114,7 +111,7 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
         return sourceAttribute;
     }
 
-    public void setSourceAttribute(String dnAttribute) {
+    public void setSourceAttribute(final String dnAttribute) {
 
         this.sourceAttribute = dnAttribute;
     }
@@ -124,7 +121,7 @@ public class TokenGroupsToAttributeProcessor implements IAttributesProcessor, In
         return targetAtribute;
     }
 
-    public void setTargetAtribute(String targetAtribute) {
+    public void setTargetAtribute(final String targetAtribute) {
 
         this.targetAtribute = targetAtribute;
     }

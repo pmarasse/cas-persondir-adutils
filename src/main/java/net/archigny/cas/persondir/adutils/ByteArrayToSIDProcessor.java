@@ -61,18 +61,18 @@ public class ByteArrayToSIDProcessor implements IAttributesProcessor, Initializi
     }
 
     @Override
-    public void processAttributes(Map<String, List<Object>> attrs) {
+    public void processAttributes(final Map<String, List<Object>> attrs) {
 
         if (!attrs.containsKey(sourceAttribute)) {
             return;
         }
 
-        List<Object> tokens = attrs.get(sourceAttribute);
-        List<Object> sids = new ArrayList<Object>(tokens.size());
+        final List<Object> tokens = attrs.get(sourceAttribute);
+        final List<Object> sids = new ArrayList<Object>(tokens.size());
 
         for (Object token : tokens) {
             try {
-                String sid = LdapUtils.convertBinarySidToString((byte[]) token);
+                final String sid = LdapUtils.convertBinarySidToString((byte[]) token);
                 if (sid != null) {
                     sids.add(sid);
                 }
@@ -101,7 +101,7 @@ public class ByteArrayToSIDProcessor implements IAttributesProcessor, Initializi
         return deleteSourceAttribute;
     }
 
-    public void setDeleteSourceAttribute(boolean deleteSourceAttribute) {
+    public void setDeleteSourceAttribute(final boolean deleteSourceAttribute) {
 
         this.deleteSourceAttribute = deleteSourceAttribute;
     }
@@ -111,7 +111,7 @@ public class ByteArrayToSIDProcessor implements IAttributesProcessor, Initializi
         return sourceAttribute;
     }
 
-    public void setSourceAttribute(String sourceAttribute) {
+    public void setSourceAttribute(final String sourceAttribute) {
 
         this.sourceAttribute = sourceAttribute;
     }
@@ -121,7 +121,7 @@ public class ByteArrayToSIDProcessor implements IAttributesProcessor, Initializi
         return targetAttribute;
     }
 
-    public void setTargetAttribute(String targetAttribute) {
+    public void setTargetAttribute(final String targetAttribute) {
 
         this.targetAttribute = targetAttribute;
     }
