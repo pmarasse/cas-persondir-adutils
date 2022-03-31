@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <springldap.version>1.3.1.RELEASE</springldap.version>
-        <springframework.version>3.1.1.RELEASE</springframework.version>
+        <springframework.version>5.3.18</springframework.version>
         <slf4j.log4j12.version>1.6.4</slf4j.log4j12.version>
         
         <adtokengorups.version>0.1.3</adtokengorups.version>
